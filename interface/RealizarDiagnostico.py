@@ -12,7 +12,7 @@ class RealizarDiagnostico:
         self.sintomas = []
         self.perguntas = []
         self.respostas = []
-        self.caracterizacoes = {}
+        self.caracterizacoes = []
         self.carregar_perguntas()
 
         self.respostas_questionario = []
@@ -31,8 +31,8 @@ class RealizarDiagnostico:
         while q.nextSolution():
             self.sintomas.append(sintoma.value)
             self.perguntas.append(pergunta.value)
-            self.respostas.append([resposta.value for resposta in respostas.value])
-            self.caracterizacoes.update({sintoma.value: caracterizacoes.value})
+            self.respostas.append([r.value for r in respostas.value])
+            self.caracterizacoes.append([c.value for c in caracterizacoes.value])
         q.closeQuery()
 
     def carregar_resultado(self):
@@ -94,17 +94,16 @@ class RealizarDiagnostico:
     def proxima_pergunta(self):
         sintoma = self.sintomas[self.indice_pergunta_atual]
         respostas = self.respostas[self.indice_pergunta_atual]
+        caracterizacoes = self.caracterizacoes[self.indice_pergunta_atual]
 
         resposta = self.resposta_var.get()
         idx = respostas.index(resposta)
 
         if idx != len(respostas) - 1:
-            print(self.caracterizacoes)
-            if self.caracterizacoes.get(sintoma.value) is not None:
-                caracterizacoes = self.caracterizacoes.get(sintoma.value)
+            if len(caracterizacoes) > 0:
                 self.respostas_questionario.append(caracterizacoes[idx])
             else:
-                self.respostas_questionario.append(sintoma)
+                self.respostas_questionario.append(sintoma.value)
 
         # atualiza a tabela
         self.carregar_resultado()

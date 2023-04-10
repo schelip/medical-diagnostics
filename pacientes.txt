@@ -1,1 +1,20 @@
-paciente(1,'Felipe',20,'Masculino','R. Dr Alberto Byng 192','99139-1349').
+paciente(1, 'Felipe', 20, 'Masculino', 'R. Dr Alberto Byng 192', '99139-1349').
+paciente(2, 'Julia', 32, 'Feminino', 'Av. Paulista 1000', '99456-7890').
+paciente(3, 'Gabriel', 45, 'Masculino', 'R. Teodoro Sampaio 123', '98123-4567').
+paciente(4, 'Carla', 27, 'Feminino', 'R. Augusta 500', '97777-7777').
+paciente(5, 'Fernando', 55, 'Masculino', 'Av. Brasil 456', '99876-5432').
+paciente(6, 'Mariana', 31, 'Feminino', 'R. Oscar Freire 100', '98543-2109').
+paciente(7, 'Rafael', 40, 'Masculino', 'R. Amauri 123', '99234-5678').
+paciente(8, 'Isabela', 24, 'Feminino', 'R. Padre João Manoel 789', '99321-0987').
+paciente(9, 'Rodrigo', 29, 'Masculino', 'Av. Faria Lima 1000', '98888-8888').
+paciente(10, 'Amanda', 23, 'Feminino', 'R. da Consolação 456', '99123-4567').
+paciente(11, 'Lucas', 36, 'Masculino', 'R. Augusta 1000', '97979-7979').
+paciente(12, 'Bianca', 28, 'Feminino', 'R. Bela Cintra 123', '98654-3210').
+paciente(13, 'Daniel', 50, 'Masculino', 'Av. Rebouças 500', '99567-8901').
+paciente(14, 'Marina', 33, 'Feminino', 'R. Padre João Manuel 789', '99123-0987').
+paciente(15, 'Pedro', 19, 'Masculino', 'R. Oscar Freire 500', '99234-5678').
+paciente(16, 'Camila', 26, 'Feminino', 'Av. Faria Lima 1000', '98888-8888').
+paciente(17, 'Eduardo', 42, 'Masculino', 'R. Amauri 123', '99777-7777').
+paciente(18, 'Ana', 21, 'Feminino', 'R. Bela Cintra 456', '98543-2109').
+paciente(19, 'Tiago', 30, 'Masculino', 'Av. Brasil 789', '99456-7890').
+paciente(20, 'Larissa', 25, 'Feminino', 'R. da Consolação 789', '98123-4567').

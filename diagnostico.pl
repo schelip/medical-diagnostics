@@ -1,4 +1,4 @@
-
+% Sistema de diagnósticos
 
 %%%% Fatos
 
@@ -10,11 +10,9 @@ sintoma(fome).
 sintoma(dor_de_cabeca).
 sintoma(irritabilidade).
 sintoma(sensibilidade).
-sintoma(dores_no_peito).
+sintoma(dor_no_peito).
 sintoma(tontura).
 sintoma(falta_de_ar).
-sintoma(desconforto_no_peito).
-sintoma(tristeza).
 sintoma(alteracao_no_humor).
 sintoma(visao_alterada).
 sintoma(formigamento_no_corpo).
@@ -33,70 +31,69 @@ caracterizacao(febre_alta, febre).
 caracterizacao(febre_baixa, febre).
 caracterizacao(dor_de_cabeca_forte, dor_de_cabeca).
 caracterizacao(dor_de_cabeca_fraca, dor_de_cabeca).
+caracterizacao(dor_no_peito_forte, dor_no_peito).
+caracterizacao(dor_no_peito_desconforto, dor_no_peito).
 caracterizacao(tosse_seca, tosse).
 caracterizacao(tosse_com_catarro, tosse).
 
-
+% Doenças, probabilidades base e sintomas
 doenca(diabetes,55,[sede,vomitos_recorrente,fraqueza,fome]).
 doenca(enxaqueca,45,[vomitos_esporadico,dor_de_cabeca_forte,irritabilidade,sensibilidade]).
-doenca(hipertensao,40,[dores_no_peito,dor_de_cabeca_forte,fraqueza,tontura]).
-doenca(asma,24,[falta_de_ar,tosse_seca,fraqueza,desconforto_no_peito]).
-doenca(depressao,60,[tristeza,fraqueza,alteracao_no_humor,irritabilidade]).
+doenca(hipertensao,40,[dor_no_peito,dor_de_cabeca,fraqueza,tontura]).
+doenca(asma,25,[falta_de_ar,tosse_seca,fraqueza,dor_no_peito_desconforto]).
 doenca(avc,45,[dor_de_cabeca_forte,visao_alterada,formigamento_no_corpo,fraqueza]).
 doenca(dengue,65,[febre_alta,dor_de_cabeca_fraca,dor_nos_olhos,manchas_vermelhas]).
-doenca(gripe,70,[febre_alta,dores_no_corpo,coriza,tosse_com_catarro]).
-doenca(resfriado,80,[tosse_com_catarro,febre_baixa,coriza,espirros]).
-doenca(bronquite,20,[tosse_seca,falta_de_ar,desconforto_no_peito,coriza]).
+doenca(gripe,70,[febre,dores_no_corpo,coriza,tosse_com_catarro]).
+doenca(resfriado,80,[tosse,febre_baixa,coriza,espirros]).
+doenca(bronquite,20,[tosse_seca,falta_de_ar,dor_no_peito,coriza]).
+doenca(tuberculose,10,[tosse,falta_de_ar,dor_no_peito_desconforto,falta_de_ar,febre,fraqueza]).
+doenca(conjuntivite,20,[dor_nos_olhos,sensibilidade,coriza,visao_alterada]).
 
-pergunta(espirros, 'Apresenta espirros ?').
+% Perguntas do questionário
+pergunta(espirros, 'Apresenta espirros?').
 pergunta(febre, 'Apresenta febre?').
 pergunta(tosse, 'Apresenta tosse?').
 pergunta(vomitos, 'Apresenta vomito?').
-pergunta(dor_de_cabeca, 'Apresenta dor de cabeça?').
+pergunta(dor_de_cabeca, 'Apresenta dor de cabeca?').
 pergunta(dores_no_corpo, 'Apresenta dores no corpo? ').
 pergunta(sede, 'Sente muita sede?').
-pergunta(fraqueza, 'Apresenta uma fraqueza em seu corpo').
-pergunta(mudancas_no_comportamento, 'Apresenta mudancas no seu comportamento?').
+pergunta(fraqueza, 'Apresenta uma fraqueza em seu corpo?').
 pergunta(dores_no_peito,'Apresenta dores no peito?').
 pergunta(falta_de_ar,'Apresenta falta de ar?').
-pergunta(tristeza,'Apresenta uma tristeza recorrente?').
-pergunta(alteracao_no_humor,'Apresenta alteracoes no humor?').
 pergunta(visao_alterada, 'Apresenta alterasoes na visao?').
 pergunta(formigamento_no_corpo,'Apresenta formigamento no corpo?').
 pergunta(dor_nos_olhos, 'Apresenta dor nos olhos?').
 pergunta(coriza,'Apresenta coriza?').
 pergunta(desconforto_no_peito, 'Apresenta algum desconforto no peito?').
-pergunta(fome,'Notou se sente fome mais vezes ao dia do que de costume?').
+pergunta(fome,'Sente fome mais vezes ao dia do que de costume?').
 pergunta(tontura,'Apresenta tontura?').
-pergunta(irritabilidade,'Ultimimamente vem se sentido irratado(a) durante o dia?').
+pergunta(irritabilidade,'Se sente irratado(a) durante o dia?').
 pergunta(manchas_vermelhas,'Apresenta manchas vermelhas no corpo?').
-pergunta(sensibilidade,'Sente sensibilidade a luz,sons e cheiros?').
+pergunta(sensibilidade,'Sente sensibilidade a luz, sons e cheiros?').
 
-%Respostas simples
+% Respostas simples
 resposta(espirros, ['Sim','Nao']).
 resposta(dores_no_corpo, ['Sim','Nao']).
 resposta(sede, ['Sim','Nao']).
 resposta(fraqueza, ['Sim','Nao']).
 resposta(mudancas_no_comportamento, ['Sim','Nao']).
-resposta(dores_no_peito, ['Sim','Nao']).
 resposta(falta_de_ar, ['Sim','Nao']).
-resposta(tristeza, ['Sim','Nao']).
 resposta(alteracao_no_humor, ['Sim','Nao']).
 resposta(visao_alterada, ['Sim','Nao']).
 resposta(formigamento_no_corpo, ['Sim','Nao']).
 resposta(dor_nos_olhos, ['Sim','Nao']).
 resposta(coriza, ['Sim','Nao']).
-resposta(desconforto_no_peito, ['Sim','Nao']).
 resposta(fome, ['Sim','Nao']).
 resposta(tontura, ['Sim','Nao']).
 resposta(irritabilidade, ['Sim','Nao']).
 resposta(manchas_vermelhas, ['Sim','Nao']).
 resposta(sensibilidade, ['Sim','Nao']).
 
-%Respostas caracterizadas
-resposta(febre, ['Alta', 'Fraca', 'Nao'], [febre_alta, febre_fraca]).
+% Respostas caracterizadas
+resposta(febre, ['Alta', 'Baixa', 'Nao'], [febre_alta, febre_baixa]).
 resposta(vomitos, ['Recorrente', 'Esporadico', 'Nao'], [vomitos_recorrente, vomitos_esporadico]).
 resposta(dor_de_cabeca, ['Forte', 'Fraca', 'Nao'], [dor_de_cabeca_forte, dor_de_cabeca_fraca]).
+resposta(dor_no_peito, ['Forte', 'Desconforto', 'Nao'], [dor_no_peito_forte, dor_no_peito_desconforto]).
 resposta(tosse, ['Seca', 'Catarro', 'Nao'], [tosse_com_catarro, tosse_seca]).
 
 
@@ -108,24 +105,33 @@ resposta(tosse, ['Seca', 'Catarro', 'Nao'], [tosse_com_catarro, tosse_seca]).
 :- begin_tests(pertence).
 
 test(pertence_sintoma_verdadeiro) :-
-    pertence(gripe, febre_alta).
+    pertence(coriza, gripe).
 
 test(pertence_sintoma_falso) :-
-    pertence(gripe, espirros).
+    not(pertence(visao_alterada, gripe)).
+
+test(pertence_sintoma_caracterizado_equivale_geral) :-
+    pertence(febre_alta, gripe).
+
+test(pertence_sintoma_geral_nao_equivale_caracterizado) :-
+    not(pertence(dor_de_cabeca, avc)).
 
 test(pertence_sintoma_caracterizado_verdadeiro) :-
-    pertence(gripe, dor_cabeca_forte).
+    pertence(dor_de_cabeca_forte, avc).
 
-test(pertence_sintoma_caracterizado_verdadeiro_geral) :-
-    pertence(enxaqueca, vomito_recorrente).
+test(pertence_sintoma_caracterizado_falso) :-
+    not(pertence(dor_de_cabeca_fraca, avc)).
 
 :- end_tests(pertence).
 
-pertence(Doenca, Sintoma) :-
+pertence(Sintoma, Doenca) :-
     doenca(Doenca, _, SintomasDoenca),
-    (member(Sintoma, SintomasDoenca);
-     caracterizacao(Sintoma, SintomaCaracterizado),
-     member(SintomaCaracterizado, SintomasDoenca)).
+    member(Sintoma, SintomasDoenca), !.
+    
+pertence(Sintoma, Doenca) :-
+    doenca(Doenca, _, SintomasDoenca),
+    caracterizacao(Sintoma, SintomaCaracterizado),
+    member(SintomaCaracterizado, SintomasDoenca), !.
 
 %% probabilidade(+Doenca, +Sintomas, -Resultado)
 %
@@ -134,26 +140,28 @@ pertence(Doenca, Sintoma) :-
 :- begin_tests(probabilidade).
 
 test(probabilidade_alta) :-
-    probabilidade(gripe, [febre_alta, tosse, dor_corpo, dor_cabeca], 100).
+    probabilidade(resfriado, [tosse_com_catarro,febre_baixa,coriza,espirros], 80).
 
 test(probabilidade_media) :-
-    probabilidade(gripe, [febre_alta, tosse, dor_corpo], 50).
+    probabilidade(resfriado, [coriza,espirros], 40).
 
 test(probabilidade_baixa) :-
-    probabilidade(gripe, [tosse, dor_corpo], 0).
+    probabilidade(resfriado, [febre_baixa], 20).
 
 test(probabilidade_zero) :-
-    probabilidade(gripe, [tosse, dor_corpo], 0).
+    probabilidade(resfriado, [visao_alterada], 0).
+
+test(probabilidade_vazio) :-
+    probabilidade(resfriado, [], 0).
 
 :- end_tests(probabilidade).
 
 probabilidade(Doenca, Sintomas, Resultado) :-
-    length(Sintomas, N_sintomas),
     doenca(Doenca, Probabilidade, SintomasDoenca),
     length(SintomasDoenca, N_sintomas_doenca),
-    intersection(Sintomas, SintomasDoenca, Intersecao),
-    length(Intersecao, N_intersecao),
-    Resultado is Probabilidade * N_intersecao / (N_sintomas_doenca + N_sintomas).
+    findall(Sintoma, (member(Sintoma, Sintomas), pertence(Sintoma, Doenca)), SintomasPertencentes),
+    length(SintomasPertencentes, N_pertencentes),
+    Resultado is Probabilidade * N_pertencentes / N_sintomas_doenca.
 
 %% diagnostico(+Sintomas, -Doenca, -Resultado)
 %
@@ -166,24 +174,52 @@ test(diagnostico_verdadeiro) :-
     assertion(Prob > 0).
 
 test(diagnostico_falso) :-
-    diagnostico([tosse, dor_corpo], gripe, Prob),
-    assertion(Prob =:= 0).
+    not(diagnostico([visao_alterada, fome], gripe, _)).
+
+test(diagnostico_gripe, nondet) :-
+    diagnostico([febre_alta, tosse, dor_corpo, dor_cabeca], Doenca, _),
+    Doenca = gripe.
+
+test(diagnostico_resultados, nondet) :-
+    findall((Doenca, Resultado),
+            diagnostico([febre_alta, tosse], Doenca, Resultado),
+            Diagnosticos),
+    member((gripe, ResultadoGripe), Diagnosticos),
+    member((dengue, ResultadoDengue), Diagnosticos),
+    ResultadoGripe > ResultadoDengue.
 
 :- end_tests(diagnostico).
 
 diagnostico(Sintomas, Doenca, Resultado) :-
     doenca(Doenca, _, _),
-    probabilidade(Doenca, Sintomas, ResultadoRaw),
-    ResultadoRaw > 0,
-    format(atom(Resultado), '~2f%', ResultadoRaw).
+    probabilidade(Doenca, Sintomas, Resultado),
+    Resultado > 0.
+
+%% diagnosticos_ordenados(+Sintomas, -Doenca, -Resultado)
+%
+% Wrapper para diagnostico, que garante a ordem decrescente de probabilidade
+% para as doenças retornadas não-deterministicamente, e formato o valor da probilidade
+:- begin_tests(diagnosticos_ordenados).
+
+test(diagnosticos_resultados_ordenados, nondet) :-
+    findall(Doenca,
+            diagnosticos_ordenados([febre_alta, tosse], Doenca, _),
+            Diagnosticos),
+    nth0(IndiceGripe, Diagnosticos, gripe),
+    nth0(IndiceDengue, Diagnosticos, dengue),
+    IndiceGripe < IndiceDengue.
+
+:- end_tests(diagnosticos_ordenados).
 
 diagnosticos_ordenados(Sintomas, Doenca, Resultado) :-
-    findall([DoencaDiagnostico, ResultadoDiagnostico],
+    findall([ResultadoDiagnostico, DoencaDiagnostico],
              diagnostico(Sintomas, DoencaDiagnostico, ResultadoDiagnostico),
              Diagnosticos),
     sort(Diagnosticos, DiagnosticosOrdenadosAsc),
     reverse(DiagnosticosOrdenadosAsc, DiagnosticosOrdenados),
-    member([Doenca, Resultado], DiagnosticosOrdenados).
+    member([ResultadoRaw, Doenca], DiagnosticosOrdenados),
+    format(atom(Resultado), '~2f%', ResultadoRaw).
+
 
 %% questao(?Sintoma, -Pergunta, -Repostas, -Caracterizacoes)
 %
@@ -192,25 +228,28 @@ diagnosticos_ordenados(Sintomas, Doenca, Resultado) :-
 :- begin_tests(questao).
 
 test(questao_simples) :-
-    questao(nausea, Pergunta, Respostas, Caracterizacoes),
-    pergunta(nausea, Pergunta),
-    resposta(nausea, Respostas),
-    Pergunta = 'Apresenta nausea?',
+    questao(espirros, Pergunta, Respostas, Caracterizacoes),
+    pergunta(espirros, Pergunta),
+    resposta(espirros, Respostas),
+    Pergunta = 'Apresenta espirros?',
     Respostas = ['Sim', 'Nao'],
     Caracterizacoes = [].
 
-test(questao_caracterizacoes) :-
+test(questao_caracterizacoes, nondet) :-
     questao(febre, Pergunta, Respostas, Caracterizacoes),
     pergunta(febre, Pergunta),
     resposta(febre, Respostas, Caracterizacoes),
-    Pergunta = 'Apresenta nausea?',
-    Respostas = ['Alta', 'Fraca', 'Nao'],
-    Caracterizacoes = [febre_alta, febre_fraca].
+    Pergunta = 'Apresenta febre?',
+    Respostas = ['Alta', 'Baixa', 'Nao'],
+    Caracterizacoes = [febre_alta, febre_baixa].
 
 :- end_tests(questao).
 
 questao(Sintoma, Pergunta, Respostas, Caracterizacoes) :-
     pergunta(Sintoma, Pergunta),
-    (resposta(Sintoma, Respostas, Caracterizacoes) ;
-     resposta(Sintoma, Respostas),
-     Caracterizacoes = []).
+    resposta(Sintoma, Respostas, Caracterizacoes).
+
+questao(Sintoma, Pergunta, Respostas, Caracterizacoes) :-
+    pergunta(Sintoma, Pergunta),
+    resposta(Sintoma, Respostas),
+    Caracterizacoes = [].
