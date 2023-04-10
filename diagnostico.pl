@@ -3,64 +3,101 @@
 %%%% Fatos
 
 % Sintomas gerais
+sintoma(sede).
+sintoma(vomitos).
+sintoma(fraqueza).
+sintoma(fome).
+sintoma(dor_de_cabeca).
+sintoma(irritabilidade).
+sintoma(sensibilidade).
+sintoma(dores_no_peito).
+sintoma(tontura).
+sintoma(falta_de_ar).
+sintoma(desconforto_no_peito).
+sintoma(tristeza).
+sintoma(alteracao_no_humor).
+sintoma(visao_alterada).
+sintoma(formigamento_no_corpo).
 sintoma(febre).
-sintoma(tosse).
+sintoma(dor_nos_olhos).
+sintoma(manchas_vermelhas).
+sintoma(dores_no_corpo).
+sintoma(coriza).
 sintoma(espirros).
-sintoma(fadiga).
-sintoma(perda_apetite).
-sintoma(diarreia).
-sintoma(vomito).
-sintoma(nausea).
-sintoma(dor_corpo).
-sintoma(dor_cabeca).
-sintoma(dor_garganta).
+sintoma(tosse).
 
 % Subclassificações de sintomas
-caracterizacao(vomito_recorrente, vomito).
-caracterizacao(vomito_esporadico, vomito).
+caracterizacao(vomitos_recorrente, vomitos).
+caracterizacao(vomitos_esporadico, vomitos).
 caracterizacao(febre_alta, febre).
 caracterizacao(febre_baixa, febre).
-caracterizacao(dor_cabeca_forte, dor_cabeca).
-caracterizacao(dor_cabeca_fraca, dor_cabeca).
-caracterizacao(dor_garganta_forte, dor_garganta).
-caracterizacao(dor_garganta_fraca, dor_garganta).
+caracterizacao(dor_de_cabeca_forte, dor_de_cabeca).
+caracterizacao(dor_de_cabeca_fraca, dor_de_cabeca).
+caracterizacao(tosse_seca, tosse).
+caracterizacao(tosse_com_catarro, tosse).
 
-% Doenças e seus sintomas
-doenca(gripe, 30, [febre_alta, tosse, dor_corpo, dor_cabeca]).
 
-doenca(resfriado, 40, [febre_baixa, tosse, espirros, dor_corpo]).
+doenca(diabetes,55,[sede,vomitos_recorrente,fraqueza,fome]).
+doenca(enxaqueca,45,[vomitos_esporadico,dor_de_cabeca_forte,irritabilidade,sensibilidade]).
+doenca(hipertensao,40,[dores_no_peito,dor_de_cabeca_forte,fraqueza,tontura]).
+doenca(asma,24,[falta_de_ar,tosse_seca,fraqueza,desconforto_no_peito]).
+doenca(depressao,60,[tristeza,fraqueza,alteracao_no_humor,irritabilidade]).
+doenca(avc,45,[dor_de_cabeca_forte,visao_alterada,formigamento_no_corpo,fraqueza]).
+doenca(dengue,65,[febre_alta,dor_de_cabeca_fraca,dor_nos_olhos,manchas_vermelhas]).
+doenca(gripe,70,[febre_alta,dores_no_corpo,coriza,tosse_com_catarro]).
+doenca(resfriado,80,[tosse_com_catarro,febre_baixa,coriza,espirros]).
+doenca(bronquite,20,[tosse_seca,falta_de_ar,desconforto_no_peito,coriza]).
 
-doenca(enxaqueca, 12, [dor_cabeca_forte, fadiga, vomito_esporadico, dor_garganta_fraca]).
-
-doenca(gastrite, 20, [dor_no_estomago, acidez_estomacal, ulceras, vomito, tosse]).
-
-% Perguntas
-pergunta(espirros, 'Apresenta espirros?').
+pergunta(espirros, 'Apresenta espirros ?').
 pergunta(febre, 'Apresenta febre?').
 pergunta(tosse, 'Apresenta tosse?').
-pergunta(fadiga, 'Apresenta cansaço ou falta de energia?').
-pergunta(perda_apetite, 'Apresenta perda de apetite?').
-pergunta(diarreia, 'Apresenta diarreia?').
-pergunta(vomito, 'Apresenta vomito?').
-pergunta(nausea, 'Apresenta nausea?').
-pergunta(dor_corpo, 'Apresenta dor no corpo?').
-pergunta(dor_cabeca, 'Apresenta dor de cabeca?').
-pergunta(dor_garganta, 'Apresenta dor de garganta?').
+pergunta(vomitos, 'Apresenta vomito?').
+pergunta(dor_de_cabeca, 'Apresenta dor de cabeça?').
+pergunta(dores_no_corpo, 'Apresenta dores no corpo? ').
+pergunta(sede, 'Sente muita sede?').
+pergunta(fraqueza, 'Apresenta uma fraqueza em seu corpo').
+pergunta(mudancas_no_comportamento, 'Apresenta mudancas no seu comportamento?').
+pergunta(dores_no_peito,'Apresenta dores no peito?').
+pergunta(falta_de_ar,'Apresenta falta de ar?').
+pergunta(tristeza,'Apresenta uma tristeza recorrente?').
+pergunta(alteracao_no_humor,'Apresenta alteracoes no humor?').
+pergunta(visao_alterada, 'Apresenta alterasoes na visao?').
+pergunta(formigamento_no_corpo,'Apresenta formigamento no corpo?').
+pergunta(dor_nos_olhos, 'Apresenta dor nos olhos?').
+pergunta(coriza,'Apresenta coriza?').
+pergunta(desconforto_no_peito, 'Apresenta algum desconforto no peito?').
+pergunta(fome,'Notou se sente fome mais vezes ao dia do que de costume?').
+pergunta(tontura,'Apresenta tontura?').
+pergunta(irritabilidade,'Ultimimamente vem se sentido irratado(a) durante o dia?').
+pergunta(manchas_vermelhas,'Apresenta manchas vermelhas no corpo?').
+pergunta(sensibilidade,'Sente sensibilidade a luz,sons e cheiros?').
 
-% Respostas simples
-resposta(tosse, ['Sim', 'Nao']).
-resposta(espirros, ['Sim', 'Nao']).
-resposta(fadiga, ['Sim', 'Nao']).
-resposta(perda_apetite, ['Sim', 'Nao']).
-resposta(diarreia, ['Sim', 'Nao']).
-resposta(nausea, ['Sim', 'Nao']).
-resposta(dor_corpo, ['Sim', 'Nao']).
+%Respostas simples
+resposta(espirros, ['Sim','Nao']).
+resposta(dores_no_corpo, ['Sim','Nao']).
+resposta(sede, ['Sim','Nao']).
+resposta(fraqueza, ['Sim','Nao']).
+resposta(mudancas_no_comportamento, ['Sim','Nao']).
+resposta(dores_no_peito, ['Sim','Nao']).
+resposta(falta_de_ar, ['Sim','Nao']).
+resposta(tristeza, ['Sim','Nao']).
+resposta(alteracao_no_humor, ['Sim','Nao']).
+resposta(visao_alterada, ['Sim','Nao']).
+resposta(formigamento_no_corpo, ['Sim','Nao']).
+resposta(dor_nos_olhos, ['Sim','Nao']).
+resposta(coriza, ['Sim','Nao']).
+resposta(desconforto_no_peito, ['Sim','Nao']).
+resposta(fome, ['Sim','Nao']).
+resposta(tontura, ['Sim','Nao']).
+resposta(irritabilidade, ['Sim','Nao']).
+resposta(manchas_vermelhas, ['Sim','Nao']).
+resposta(sensibilidade, ['Sim','Nao']).
 
-% Respostas caracterizantes
+%Respostas caracterizadas
 resposta(febre, ['Alta', 'Fraca', 'Nao'], [febre_alta, febre_fraca]).
-resposta(vomito, ['Recorrente', 'Esporadico', 'Nao'], [vomito_recorrente, vomito_esporadico]).
-resposta(dor_garganta, ['Forte', 'Fraca', 'Nao'], [dor_garganta_forte, dor_garganta_fraca]).
-resposta(dor_cabeca, ['Forte', 'Fraca', 'Nao'], [dor_cabeca_forte, dor_cabeca_fraca]).
+resposta(vomitos, ['Recorrente', 'Esporadico', 'Nao'], [vomitos_recorrente, vomitos_esporadico]).
+resposta(dor_de_cabeca, ['Forte', 'Fraca', 'Nao'], [dor_de_cabeca_forte, dor_de_cabeca_fraca]).
+resposta(tosse, ['Seca', 'Catarro', 'Nao'], [tosse_com_catarro, tosse_seca]).
 
 
 %%%%% Predicados
