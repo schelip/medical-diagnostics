@@ -1,21 +1,9 @@
 from pyswip import Prolog, Functor, call
-
-prolog = Prolog()
-
-class PacienteModel:
-    def __init__(self, id, nome, idade, genero, endereco, telefone):
-        self.id = id
-        self.nome = nome
-        self.idade = idade
-        self.genero = genero
-        self.endereco = endereco
-        self.telefone = telefone
+from repository.Prolog import prolog
 
 class Pacientes:
     def __init__(self):
         prolog.consult("pacientes.pl")
-
-        main = Functor("main", 0)
 
         self.definir_arquivo_pacientes = Functor("definir_arquivo_pacientes", 1)
         self.carregar_pacientes = Functor("carregar_pacientes", 0)
@@ -24,7 +12,7 @@ class Pacientes:
         self.alterar_paciente = Functor("alterar_paciente", 7)
         self.excluir_paciente = Functor("excluir_paciente", 2)
 
-        call(main())
+        call(self.definir_arquivo_pacientes("pacientes.txt"))
 
     def consultar_paciente_id(self, id):
         result =  list(prolog.query(f"paciente({id},Nome, Idade, Genero, Endereco, Telefone)"))
@@ -43,5 +31,4 @@ class Pacientes:
         query = ', '.join(query)
         pacientes = list(prolog.query("paciente(" + query + ")"))
         [p.update({k: v for k, v in paciente.items() if v is not None}) for p in pacientes]
-        print(pacientes)
         return pacientes

@@ -3,24 +3,23 @@
 % Variável global para armazenar o nome do arquivo
 :- dynamic arquivo_pacientes/1.
 
-:- begin_tests(arquivo_pacientes).
-
-% Teste para verificar a alteração da variável global arquivo_pacientes
-test(definir_arquivo_pacientes) :-
-    arquivo_pacientes(NomeArquivo),
-    definir_arquivo_pacientes('teste'),
-    arquivo_pacientes('teste'),
-    retractall(arquivo_pacientes(_)),
-    assert(arquivo_pacientes(NomeArquivo)).
-
-:- end_tests(arquivo_pacientes).
-
 %% definir_arquivo_pacientes(?Arquivo)
 %
 % Função para definir o arquivo a ser usado
 definir_arquivo_pacientes(Arquivo) :-
     retractall(arquivo_pacientes(_)),
-    assert(arquivo_pacientes(Arquivo)).
+    assert(arquivo_pacientes(Arquivo)),
+    carregar_pacientes.
+
+%% criar_arquivo_testes
+%
+% Wrapper para executar os testes usando o arquivo exclusivo
+criar_arquivo_testes :-
+    definir_arquivo_pacientes('pacientes-tests.txt'),
+    arquivo_pacientes(NomeArquivo),
+    open(NomeArquivo, write, Arquivo),
+    write(Arquivo, ''),
+    close(Arquivo).
 
 % Predicado dinâmico para pacientes
 :- dynamic paciente/6.
@@ -28,48 +27,58 @@ definir_arquivo_pacientes(Arquivo) :-
 :- begin_tests(pacientes).
 
 % Teste para verificar se é possível cadastrar um paciente corretamente
-test(cadastrar_paciente_sucesso) :-
+test(cadastrar_paciente_sucesso, [ setup(criar_arquivo_testes),
+                                   cleanup(definir_arquivo_pacientes('pacientes.txt'))
+                                 ]) :-
     cadastrar_paciente(1, 'Fulano', 25, 'Masculino', 'Rua A', '1111-1111', Resultado),
     paciente(1, 'Fulano', 25, 'Masculino', 'Rua A', '1111-1111'),
-    Resultado = 'Paciente cadastrado com sucesso',
-    retractall(paciente(1, _, _, _, _, _)).
+    Resultado = 'Paciente cadastrado com sucesso'.
 
 % Teste para verificar que não é possível cadastrar mais de um paciente com o mesmo id
-test(cadastrar_paciente_falha) :-
+test(cadastrar_paciente_falha, [ setup(criar_arquivo_testes),
+                                 cleanup(definir_arquivo_pacientes('pacientes.txt'))
+                               ]) :-
     cadastrar_paciente(1, 'Fulano', 25, 'Masculino', 'Rua A', '1111-1111', _),
     cadastrar_paciente(1, 'Teste', 25, 'Masculino', 'Rua A', '1111-1111', Resultado),
-    Resultado = 'Erro: ja existe um paciente com esse ID.',
-    retractall(paciente(1, _, _, _, _, _)).
+    Resultado = 'Erro: ja existe um paciente com esse ID.'.
 
 % Teste para verificar se é possível alterar um paciente corretamente
-test(alterar_paciente_sucesso) :-
+test(alterar_paciente_sucesso, [ setup(criar_arquivo_testes),
+                                 cleanup(definir_arquivo_pacientes('pacientes.txt'))
+                               ]) :-
     cadastrar_paciente(1, 'Ciclana', 30, 'Feminino', 'Rua B', '2222-2222', _),
     alterar_paciente(1, 'Beltrana', 28, 'Feminino', 'Rua C', '3333-3333', Resultado),
     paciente(1, 'Beltrana', 28, 'Feminino', 'Rua C', '3333-3333'),
-    Resultado = 'Paciente alterado com sucesso',
-    retractall(paciente(1, _, _, _, _, _)).
+    Resultado = 'Paciente alterado com sucesso'.
 
 % Teste para verificar o erro ao tentar alterar um id que não existe
-test(alterar_paciente_falha) :-
+test(alterar_paciente_falha, [ setup(criar_arquivo_testes),
+                               cleanup(definir_arquivo_pacientes('pacientes.txt'))
+                             ]) :-
+    retractall(paciente(_, _, _, _, _, _)),
     alterar_paciente(1, 'Beltrana', 28, 'Feminino', 'Rua C', '3333-3333', Resultado),
-    Resultado = 'Erro: nao existe nenhum paciente com esse ID.',
-    retractall(paciente(1, _, _, _, _, _)).
+    Resultado = 'Erro: nao existe nenhum paciente com esse ID.'.
 
 % Teste para verificar se é possível excluir um paciente corretamente
-test(excluir_paciente_sucesso) :-
+test(excluir_paciente_sucesso, [ setup(criar_arquivo_testes),
+                                 cleanup(definir_arquivo_pacientes('pacientes.txt'))
+                               ]) :-
     cadastrar_paciente(1, 'Sicrano', 35, 'Masculino', 'Rua D', '4444-4444', _),
     excluir_paciente(1, Resultado),
     Resultado = 'Paciente excluido com sucesso',
-    not(paciente(3, _, _, _, _, _)).
+    not(paciente(1, _, _, _, _, _)).
 
 % Teste para verificar o erro ao tentar alterar um id que não existe
-test(excluir_paciente_falha) :-
+test(excluir_paciente_falha, [ setup(criar_arquivo_testes),
+                               cleanup(definir_arquivo_pacientes('pacientes.txt'))
+                             ]) :-
     excluir_paciente(1, Resultado),
-    Resultado = 'Erro: nao existe nenhum paciente com esse ID.',
-    retractall(paciente(1, _, _, _, _, _)).
+    Resultado = 'Erro: nao existe nenhum paciente com esse ID.'.
 
 % Teste para verificar se é possível carregar os pacientes a partir do arquivo corretamente
-test(carregar_pacientes, nondet) :-
+test(carregar_pacientes, nondet, [ setup(criar_arquivo_testes),
+                                   cleanup(definir_arquivo_pacientes('pacientes.txt'))
+                                 ]) :-
     arquivo_pacientes(NomeArquivo),
     open(NomeArquivo, write, Arquivo),
     writeq(Arquivo, paciente(4, 'Fulana', 27, 'Feminino', 'Rua E', '5555-5555')),
@@ -77,11 +86,12 @@ test(carregar_pacientes, nondet) :-
     nl(Arquivo),
     close(Arquivo),
     carregar_pacientes,
-    paciente(4, 'Fulana', 27, 'Feminino', 'Rua E', '5555-5555'),
-    retractall(paciente(_, _, _, _, _, _)).
+    paciente(4, 'Fulana', 27, 'Feminino', 'Rua E', '5555-5555').
 
 % Teste para verificar se é possível salvar os pacientes no arquivo corretamente
-test(salvar_pacientes, nondet) :-
+test(salvar_pacientes, nondet, [ setup(criar_arquivo_testes),
+                                 cleanup(definir_arquivo_pacientes('pacientes.txt'))
+                               ]) :-
     assert(paciente(5, 'Pafúncio', 24, 'Masculino', 'Rua F', '6666-6666')),
     salvar_pacientes,
     arquivo_pacientes(NomeArquivo),
@@ -101,18 +111,6 @@ test(salvar_pacientes, nondet) :-
     paciente(5, 'Pafúncio', 24, 'Masculino', 'Rua F', '6666-6666').
 
 :- end_tests(pacientes).
-
-%% executar_testes_pacientes
-%
-% Wrapper para executar os testes usando o arquivo exclusivo
-executar_testes_pacientes :-
-    definir_arquivo_pacientes('pacientes-tests.txt'),
-    arquivo_pacientes(NomeArquivo),
-    open(NomeArquivo, write, Arquivo),
-    write(Arquivo, ''),
-    close(Arquivo),
-    run_tests,
-    definir_arquivo_pacientes('pacientes.txt').
 
 %% carregar_pacientes
 %
@@ -179,8 +177,3 @@ excluir_paciente(ID, Resultado) :-
         Resultado = 'Paciente excluido com sucesso'
     ;   Resultado = 'Erro: nao existe nenhum paciente com esse ID.'
     ).
-
-main :-
-    % Por padrão, o arquivo utilizado é pacientes.txt, mas deve poder ser alterada para rodar os testes
-    definir_arquivo_pacientes('pacientes.txt'),
-    carregar_pacientes.

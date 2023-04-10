@@ -1,0 +1,1 @@
+paciente(1,'Felipe',20,'Masculino','R. Dr Alberto Byng 192','99139-1349').
