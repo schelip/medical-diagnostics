@@ -42,6 +42,9 @@ class RealizarDiagnostico:
         resultado = Variable()
 
         q = Query(self.diagnostico.diagnosticos_ordenados(self.respostas_questionario, doenca, resultado))
+        q.nextSolution()
+        self.resultado = doenca.value
+        self.tree.insert("", "end", text="", values=(doenca.value, resultado.value))
         while q.nextSolution():
             self.tree.insert("", "end", text="", values=(doenca.value, resultado.value))
         q.closeQuery()
@@ -90,6 +93,11 @@ class RealizarDiagnostico:
             row = int(widget.grid_info()["row"])
             if row == 1 or row == 2:
                 widget.destroy()
+        
+        self.resultado_label = ttk.Label(self.questions_frame, text=self.resultado, font=("Arial", 10, "bold"))
+        self.resultado_label.grid(row=1, column=0, padx=10, pady=10)
+        self.mais_info_btn = ttk.Button(self.questions_frame, text="Ver mais", command=self.exibir_popup_mais_info)
+        self.mais_info_btn.grid(row=2, column=0, padx=10, pady=10)
 
     def proxima_pergunta(self):
         sintoma = self.sintomas[self.indice_pergunta_atual]
@@ -114,3 +122,37 @@ class RealizarDiagnostico:
             self.mostrar_resultado()
         else:
             self.atualizar_questao()
+
+    def exibir_popup_mais_info(self):
+        self.popup_mais_info = tk.Toplevel(self.questions_frame)
+        self.popup_mais_info.title("Mais info")
+        
+        titulo = tk.Label(self.popup_mais_info, text=self.resultado, font=("Arial", 10, "bold"))
+        titulo.pack(pady=20)
+
+        pertencentes_lbl = tk.Label(self.popup_mais_info, text="Seus sintomas compatíveis com a doença:")
+        pertencentes_lbl.pack(padx=20, pady=10)
+        pertencentes_tree = ttk.Treeview(self.popup_mais_info, columns=('Sintoma'), show='headings')
+        pertencentes_tree.heading('Sintoma', text='Sintoma')
+        pertencentes_tree.pack(padx=20, pady=10)
+
+        pertencentes = Variable()
+        q_pertencentes = Query(self.diagnostico.pertencentes(self.respostas_questionario, self.resultado.value, pertencentes))
+        q_pertencentes.nextSolution()
+        for p in pertencentes.value:
+            pertencentes_tree.insert("", "end", text="", values=p.value)
+        q_pertencentes.closeQuery()
+        
+        nao_apresentados_lbl = tk.Label(self.popup_mais_info, text="Outros sintomas da doença:")
+        nao_apresentados_lbl.pack(padx=20, pady=10)
+        nao_apresentados_tree = ttk.Treeview(self.popup_mais_info, columns=('Sintoma'), show='headings')
+        nao_apresentados_tree.heading('Sintoma', text='Sintoma')
+        nao_apresentados_tree.pack(padx=20, pady=10)
+
+        nao_apresentados = Variable()
+        q_nao_apresentados = Query(self.diagnostico.nao_apresentados(self.respostas_questionario, self.resultado.value, nao_apresentados))
+        q_nao_apresentados.nextSolution()
+        print([p.value for p in nao_apresentados.value])
+        for p in nao_apresentados.value:
+            nao_apresentados_tree.insert("", "end", text="", values=p.value)
+        q_nao_apresentados.closeQuery()

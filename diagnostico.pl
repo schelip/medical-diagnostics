@@ -99,7 +99,7 @@ resposta(tosse, ['Seca', 'Catarro', 'Nao'], [tosse_com_catarro, tosse_seca]).
 
 %%%%% Predicados
 
-%% pertence(?Doenca, ?Sintoma)
+%% pertence(?Sintoma, ?Doenca)
 %
 % Estabelece a relação entre uma doença e um sintoma (caracterizado ou geral)
 :- begin_tests(pertence).
@@ -133,6 +133,52 @@ pertence(Sintoma, Doenca) :-
     caracterizacao(Sintoma, SintomaCaracterizado),
     member(SintomaCaracterizado, SintomasDoenca), !.
 
+%% pertencentes(+Sintomas, +Doenca, -SintomasPertencentes)
+%
+% Filtra uma lista de sintomas para retornar apenas quais desses sintomas são de certa doença
+:- begin_tests(pertencentes).
+
+test(todos_pertencentes) :-
+    pertencentes([tosse_com_catarro,febre_baixa], resfriado, [tosse_com_catarro,febre_baixa]).
+
+test(alguns_pertencentes) :-
+    pertencentes([tosse_com_catarro,visao_alterada], resfriado, [tosse_com_catarro]).
+
+test(nenhum_pertencente) :-
+    pertencentes([irritabilidade,visao_alterada], resfriado, []).    
+
+:- end_tests(pertencentes).
+
+pertencentes(Sintomas, Doenca, SintomasPertencentes) :-
+    findall(Sintoma, (member(Sintoma, Sintomas), pertence(Sintoma, Doenca)), SintomasPertencentes).
+
+%% nao_apresentados(+Sintomas, +Doenca, -SintomasPertencentes)
+%
+% Filtra uma lista de sintomas para retornar apenas quais desses sintomas NÃO são de certa doença
+:- begin_tests(nao_apresentados).
+
+test(alguns_nao_apresentados) :-
+    nao_apresentados([tosse_com_catarro,febre_baixa], resfriado, [coriza, espirros]).
+
+test(alguns_nao_apresentados_alguns_nao_pertencentes) :-
+    nao_apresentados([tosse_com_catarro,visao_alterada], resfriado, [febre_baixa, coriza, espirros]).
+
+test(todos_nao_apresentados) :-
+    nao_apresentados([irritabilidade,visao_alterada], resfriado, [tosse, febre_baixa, coriza, espirros]).
+
+test(nenhum_nao_apresentado) :-
+    nao_apresentados([tosse, febre_baixa, coriza, espirros], resfriado, []).
+
+:- end_tests(nao_apresentados).
+
+nao_apresentados(Sintomas, Doenca, SintomasNaoApresentados) :-
+    doenca(Doenca, _, SintomasDoenca),
+    findall(SintomaDoenca,
+            (member(SintomaDoenca, SintomasDoenca),
+                not(member(SintomaDoenca, Sintomas);
+                (member(Sintoma, Sintomas), caracterizacao(Sintoma, SintomaDoenca)))),
+            SintomasNaoApresentados).
+
 %% probabilidade(+Doenca, +Sintomas, -Resultado)
 %
 % A partir da probabilidade base e da relação entre os sintomas passados e da doença,
@@ -159,7 +205,7 @@ test(probabilidade_vazio) :-
 probabilidade(Doenca, Sintomas, Resultado) :-
     doenca(Doenca, Probabilidade, SintomasDoenca),
     length(SintomasDoenca, N_sintomas_doenca),
-    findall(Sintoma, (member(Sintoma, Sintomas), pertence(Sintoma, Doenca)), SintomasPertencentes),
+    pertencentes(Sintomas, Doenca, SintomasPertencentes),
     length(SintomasPertencentes, N_pertencentes),
     Resultado is Probabilidade * N_pertencentes / N_sintomas_doenca.
 

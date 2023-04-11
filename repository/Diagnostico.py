@@ -6,6 +6,8 @@ class Diagnostico:
         prolog.consult('diagnostico.pl')
         
         self.pertence = Functor("pertence", 2)
+        self.pertencentes = Functor("pertencentes", 3)
+        self.nao_apresentados = Functor("nao_apresentados", 3)
         self.probabilidade = Functor("probabilidade", 3)
         self.diagnostico = Functor("diagnostico", 3)
         self.diagnosticos_ordenados = Functor("diagnosticos_ordenados", 3)
